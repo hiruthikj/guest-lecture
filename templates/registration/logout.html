@@ -1,0 +1,27 @@
+{% extends '_base.html' %}
+{% load static %}
+
+{% block title %}LOGOOUT{% endblock %}
+
+{% block head %}
+{% comment %} <link rel="stylesheet" href="{% static 'css/login.css' %}"> {% endcomment %}
+<link rel="stylesheet" href="{% static 'css/logout.css' %}">
+
+{% endblock %}
+
+{% block nav %}
+{% endblock %}
+
+{% block content %}    
+<div class="container">
+    <div class="card card-container form-group">
+        <p id="profile-name" class="profile-name-card"><img src="{% static 'img/university.svg' %}" alt="university logo"></p>
+
+        <h4 class="logoutMessage">You have logged out sucessfully</h4>
+        <a href="{% url 'login' %}">
+            <button type="submit" class="btn btn-lg btn-primary btn-block btn-signin">Login Again</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}
