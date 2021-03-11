@@ -7,6 +7,26 @@ admin.site.site_header = "Event Administration"
 admin.site.index_title = "CRUD Operations"
 admin.site.site_title = "Guest Lecture Site"
 
+import csv
+from django.http import HttpResponse
+
+class ExportCsvMixin:
+    def export_as_csv(self, request, queryset):
+
+        meta = self.model._meta
+        field_names = [field.name for field in meta.fields]
+
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename={}.csv'.format(meta)
+        writer = csv.writer(response)
+
+        writer.writerow(field_names)
+        for obj in queryset:
+            row = writer.writerow([getattr(obj, field) for field in field_names])
+
+        return response
+
+    export_as_csv.short_description = "Export as CSV"
 
 # class CustomUserAdmin(UserAdmin):
 #     fieldsets = [
