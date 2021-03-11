@@ -1,5 +1,5 @@
 from django.db import models
-from django.shortcuts import reverse, render
+from django.shortcuts import reverse, render, redirect
 
 # from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
@@ -60,6 +60,20 @@ class EventView(DetailView):
     template_name = "event.html"
     model = Event
     context_object_name = "event"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # context['already_applied'] = applications.has_applied(self.kwargs["user_pk"], )
+        
+        return context
+
+
+
+def eventRegistrationView(request, user_pk, pk):
+    event = Event.objects.get(pk=pk)
+    event.register_to_event(user=request.user)
+    return redirect(reverse('lecture_app:event', kwargs=dict(user_pk=user_pk,pk=pk)))
+
 
 # @login_required()
 # def home_view(request, username):

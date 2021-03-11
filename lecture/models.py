@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
-
+from django.shortcuts import redirect
 
 # STATUSES = [
 #     (1, 'On-Schedule'),
@@ -99,8 +99,33 @@ class Event(models.Model):
 
     def get_absolute_url(self):
         return reverse("lecture_app:event", kwargs={"pk": self.pk})
-    
+
+    def register_to_event(self, user):
+        new_application = applications.objects.create(
+            student = user,
+            event = self,
+            # time_registered = timezone.now()
+        )
+
+    def remove_registration_from_event(self, user):
+        existing_application = applications.objects.get(student=user, event=self)
+        existing_application.delete()
+      
     
 class applications(models.Model):
     student = models.ForeignKey('accounts.CustomUser',verbose_name='student',on_delete=models.CASCADE)
     event = models.ForeignKey('Event',verbose_name='Event',on_delete=models.CASCADE)
+    time_registered = models.DateTimeField(_("Time Registered"), auto_now_add=True, null=True, blank=True)
+
+    def has_applied(self, user_pk, event_pk):
+        try:
+            applications.objects.get(student=user_pk, event=event_pk)
+            return True
+        except:
+            return False
+
+    
+    def __str__(self):
+        return f"{self.event} - {self.student}"
+
+    

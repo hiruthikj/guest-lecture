@@ -9,13 +9,24 @@
 
 
 {% block content %}
-
-{{ event.event_name }}
+<br><br><br>
+user {{ user.user_type }} {{ user.pk }}
+<br>{{ event.event_name }}
 <br>{{ event.start_date }}
 <br>{{ event.end_date }}
 <br>{{ event.max_seats }}
 <br>{{ event.status }}
 <br>{{ event.type }}
+
+<form action="{% url 'lecture_app:event_registration' user_pk=user.pk pk=event.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Register</button>
+</form>
+
+{% if already_applied %}
+Registered!!
+{% endif %}
+
 
 
 
