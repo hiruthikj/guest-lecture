@@ -1,3 +1,2 @@
-# Guest Lecture App
+# Lecture Management
 
-HEROKU: http://guest-lecture.herokuapp.com
