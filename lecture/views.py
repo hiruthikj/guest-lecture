@@ -63,7 +63,7 @@ class EventView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['already_applied'] = applications.has_applied(self.kwargs["user_pk"], )
+        context['already_applied'] = applications.has_applied(user_pk=self.kwargs["user_pk"], event_pk=context['event'].pk)
         
         return context
 

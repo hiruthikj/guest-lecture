@@ -117,7 +117,7 @@ class applications(models.Model):
     event = models.ForeignKey('Event',verbose_name='Event',on_delete=models.CASCADE)
     time_registered = models.DateTimeField(_("Time Registered"), auto_now_add=True, null=True, blank=True)
 
-    def has_applied(self, user_pk, event_pk):
+    def has_applied(user_pk, event_pk):
         try:
             applications.objects.get(student=user_pk, event=event_pk)
             return True
