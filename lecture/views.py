@@ -1,11 +1,12 @@
 from django.shortcuts import reverse, render
-from django.contrib.auth import authenticate, login
+# from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
 from django.views.generic.base import TemplateView
-from .models import Event,applications
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+from datetime import datetime
+from .models import Event,applications
 
 
 
@@ -18,18 +19,18 @@ class HomeView(LoginRequiredMixin, TemplateView):
         # context['book_list'] = Book.objects.all()
         return context
 
-def appliedEvents(request,username):
-    apps = applications.objects.filter(student=username)
+def appliedEvents(request,user_pk):
+    apps = applications.objects.filter(student=user_pk)
     eventobj_list = []
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
         eventobj_list.append(eventobj)
     return render(request,'appliedEvents.html',{'events':eventobj_list})
 
-def upcomingEvents(request,username):
-    eventobj_list = Event.objects.filter(status="ON")
+def upcomingEvents(request,user_pk):
+    eventobj_list = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE)
     eventobj_list = list(eventobj_list)
-    apps = applications.objects.filter(student=username)
+    apps = applications.objects.filter(student=user_pk)
     eventobj_lists = []
     print(eventobj_list)
     for app in apps:
@@ -40,7 +41,14 @@ def upcomingEvents(request,username):
     print(eventobj_list)
     return render(request,'upcomingEvents.html',{'events':eventobj_list})
 
-#def pastEvents(request)
+def pastEvents(request, user_pk):
+    apps = applications.objects.filter(student=user_pk)
+    eventobj_list = []
+    for app in apps:
+        eventobj = Event.objects.get(event_name=app.event)
+        if eventobj.end_date > datetime.now():
+            eventobj_list.append(eventobj)
+    return render(request,'pastEvents.html',{'events':eventobj_list})
 
 # @login_required()
 # def home_view(request, username):

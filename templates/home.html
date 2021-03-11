@@ -1,5 +1,14 @@
-{% extends '_base.html' %} {% load static %} {% block title %}Home{% endblock title %} {% block head %} {% comment %}
-<link rel="stylesheet" href="css/home.css"> {% endcomment %} {% endblock head %} {% block content %}
+{% extends '_base.html' %}
+{% load static %} 
+
+{% block title %}Home{% endblock title %} 
+
+{% block head %} 
+{% comment %}<link rel="stylesheet" href="css/home.css"> {% endcomment %}
+{% endblock head %} 
+
+
+{% block content %}
 
 
 <!-- Background image -->
@@ -10,33 +19,31 @@
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
         <div class="justify-content-center align-items-center h-100">
             <div class="text-white">
-                <h1 class="mb-3">Welcome to Event System! {{ user.username }}</h1>
+                <h1 class="mb-3">Welcome to the Event System, {{ user.username }}!</h1>
                 {% comment %}
-                <h4 class="mb-3">Subheading</h4> {% endcomment %} {% comment %} <a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a> {% endcomment %}
+                <h4 class="mb-3">Subheading</h4> {% endcomment %} {% comment %} <a class="btn btn-outline-light btn-lg"
+                    href="#!" role="button">Call to action</a> {% endcomment %}
                 <div class="container justify-content-center w-25">
                     <div class="card">
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item bg-success ">
                                 <p class="">
-
                                     Applied Events
-                                    <a href="/appliedEvents/{{ user.id }}" class="stretched-link float-right"><i
-                                            class="fas fa-angle-double-right"></i></a>
+                                    <a href="{% url 'lecture_app:appliedEvents' user.id %}"
+                                        class="stretched-link float-right"><i class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
                             <li class="list-group-item bg-info ">
                                 <p class="">
-
                                     Upcoming Events
-                                    <a href="/upcomingEvents/{{ user.id }}" class="stretched-link float-right"><i
-                                            class="fas fa-angle-double-right"></i></a>
+                                    <a href="{% url 'lecture_app:upcomingEvents' user.id %}"
+                                        class="stretched-link float-right"><i class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
                             <li class="list-group-item bg-warning ">
                                 <p class="">
-
                                     Past Events
-                                    <a href="#" class="stretched-link float-right"><i
+                                    <a href="{% url 'lecture_app:pastEvents' user.id %}" class="stretched-link float-right"><i
                                             class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
