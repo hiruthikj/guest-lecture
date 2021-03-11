@@ -26,6 +26,22 @@ def appliedEvents(request,username):
         eventobj_list.append(eventobj)
     return render(request,'appliedEvents.html',{'events':eventobj_list})
 
+def upcomingEvents(request,username):
+    eventobj_list = Event.objects.filter(status="ON")
+    eventobj_list = list(eventobj_list)
+    apps = applications.objects.filter(student=username)
+    eventobj_lists = []
+    print(eventobj_list)
+    for app in apps:
+        eventobj = Event.objects.get(event_name=app.event)
+        eventobj_lists.append(eventobj)
+    for eventobj in eventobj_lists:
+        eventobj_list.remove(eventobj)
+    print(eventobj_list)
+    return render(request,'upcomingEvents.html',{'events':eventobj_list})
+
+#def pastEvents(request)
+
 # @login_required()
 # def home_view(request, username):
 #     user = CustomUser.objects.get(username = username)
