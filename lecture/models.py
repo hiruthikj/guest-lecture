@@ -29,20 +29,10 @@ class Student(models.Model):
     #     YEAR3 = 3,3
     #     YEAR4 = 4,4
 
-    account = models.OneToOneField(
-        "accounts.CustomUser", verbose_name=_("Account"), on_delete=models.CASCADE
-    )
-    reg_no = models.CharField(
-        _("Registration Number"), max_length=50, null=True, blank=True, unique=True
-    )
-    # year_of_study = models.PositiveIntegerField(_("Year of Study"), null=True, blank=True, choices=YearOfStudyChoices.choices)
-    dept_fk = models.ForeignKey(
-        "Department",
-        verbose_name=_("Department"),
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-    )
+    account = models.OneToOneField('accounts.CustomUser', verbose_name=_("Account"), on_delete=models.CASCADE)
+    reg_no = models.CharField(_("Registration Number"), max_length=50, null=True, blank=True, unique=True)
+    # year_of_study = models.PositiveIntegerField(_("Year of Study"), null=True, blank=True, choices=YearOfStudyChoices.choices) 
+    dept_fk = models.ForeignKey('Department', verbose_name=_("Department"), on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return f"{self.account.get_username()}"
@@ -52,17 +42,9 @@ class Student(models.Model):
 
 
 class Faculty(models.Model):
-    account = models.OneToOneField(
-        "accounts.CustomUser", verbose_name=_("Account"), on_delete=models.CASCADE
-    )
+    account = models.OneToOneField('accounts.CustomUser', verbose_name=_("Account"), on_delete=models.CASCADE)
     # emp_no = models.CharField(_("Employee Number"), max_length=50, null=True, blank=True, unique=True)
-    dept_fk = models.ForeignKey(
-        "Department",
-        verbose_name=_("Department"),
-        on_delete=models.PROTECT,
-        null=True,
-        blank=True,
-    )
+    dept_fk = models.ForeignKey('Department', verbose_name=_("Department"), on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
         return f"{self.account.get_username()}"
@@ -72,9 +54,7 @@ class Faculty(models.Model):
 
 
 class CIRFaculty(models.Model):
-    account = models.OneToOneField(
-        "accounts.CustomUser", verbose_name=_("Account"), on_delete=models.CASCADE
-    )
+    account = models.OneToOneField('accounts.CustomUser', verbose_name=_("Account"), on_delete=models.CASCADE)
     # emp_no = models.CharField(_("Employee Number"), max_length=50, null=True, blank=True, unique=True)
 
     def __str__(self):
@@ -85,9 +65,7 @@ class CIRFaculty(models.Model):
 
 
 class ExternalUser(models.Model):
-    account = models.OneToOneField(
-        "accounts.CustomUser", verbose_name=_("Account"), on_delete=models.CASCADE
-    )
+    account = models.OneToOneField('accounts.CustomUser', verbose_name=_("Account"), on_delete=models.CASCADE)
 
     def __str__(self):
         return f"{self.account.get_username()}"
@@ -98,45 +76,31 @@ class ExternalUser(models.Model):
 
 class Event(models.Model):
     class EventStatus(models.TextChoices):
-        ON_SCHEDULE = "ON", _("On-Schedule")
-        COMPLETED = "COMP", _("Completed")
-        CANCELLED = "X", _("Cancelled")
-        TENTATIVE = "TNTV", _("Tentative")
+        ON_SCHEDULE = 'ON', _("On-Schedule")
+        COMPLETED = 'COMP', _("Completed")
+        CANCELLED = 'X', _("Cancelled")
+        TENTATIVE = 'TNTV', _("Tentative")
 
     class EventType(models.TextChoices):
-        CIR = "CIR", _("CIR")
-        DEPT = "DEPT", _("Department")
-        OTHER = "OTHER", _("Other")
-
-    # e_id = models.AutoField(primary_key=True)
+        CIR = 'CIR', _("CIR")
+        DEPT = 'DEPT', _("Department")
+        OTHER = 'OTHER', _("Other")
+    #e_id = models.AutoField(primary_key=True)
     event_name = models.CharField(_("Event Name"), max_length=200)
-    start_date = models.DateTimeField(
-        _("Start Date"), null=True, blank=True, auto_now=False, auto_now_add=False
-    )
-    end_date = models.DateTimeField(
-        _("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False
-    )
+    start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
+    end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
     max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
-    status = models.CharField(
-        _("Status"),
-        choices=EventStatus.choices,
-        default=EventStatus.ON_SCHEDULE,
-        max_length=20,
-    )
-    type = models.CharField(
-        _("Type"), choices=EventType.choices, default=EventType.CIR, max_length=20
-    )
+    status = models.CharField(_("Status"), choices=EventStatus.choices, default=EventStatus.ON_SCHEDULE, max_length=20)
+    type = models.CharField(_("Type"), choices=EventType.choices, default=EventType.CIR, max_length=20)
 
     def __str__(self):
         return f"{self.event_name}"
 
     def get_absolute_url(self):
         return reverse("lecture_app:event", kwargs={"pk": self.pk})
-
-
+    
+    
 class applications(models.Model):
-    student = models.ForeignKey(
-        "accounts.CustomUser", verbose_name="student", on_delete=models.CASCADE
-    )
-    event = models.ForeignKey("Event", verbose_name="Event", on_delete=models.CASCADE)
+    student = models.ForeignKey('accounts.CustomUser',verbose_name='student',on_delete=models.CASCADE)
+    event = models.ForeignKey('Event',verbose_name='Event',on_delete=models.CASCADE)
