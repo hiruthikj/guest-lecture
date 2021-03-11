@@ -1,0 +1,22 @@
+{% extends '_base.html' %}
+{% load static %} 
+
+{% block title %}Event - {{ event.event_name }}{% endblock title %} 
+
+{% block head %} 
+{% comment %}<link rel="stylesheet" href="css/home.css"> {% endcomment %}
+{% endblock head %} 
+
+
+{% block content %}
+
+{{ event.event_name }}
+<br>{{ event.start_date }}
+<br>{{ event.end_date }}
+<br>{{ event.max_seats }}
+<br>{{ event.status }}
+<br>{{ event.type }}
+
+
+
+{% endblock content %}
