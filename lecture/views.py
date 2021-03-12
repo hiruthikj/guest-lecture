@@ -8,7 +8,9 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 
-from datetime import datetime
+from datetime import datetime, time
+from django.utils import timezone
+# now = timezone.now()
 from .models import Event, applications
 
 
@@ -27,23 +29,25 @@ def appliedEvents(request, user_pk):
     eventobj_list = []
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
-        eventobj_list.append(eventobj)
+        if eventobj.end_date > timezone.now():
+            eventobj_list.append(eventobj)
     return render(request, "appliedEvents.html", {"events": eventobj_list})
 
 
 def upcomingEvents(request, user_pk):
-    eventobj_list = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE)
-    eventobj_list = list(eventobj_list)
+    all_events = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
+    all_events = list(all_events)
     apps = applications.objects.filter(student=user_pk)
-    eventobj_lists = []
-    print(eventobj_list)
+    applied_events = []
+    # print(all_events)
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
-        eventobj_lists.append(eventobj)
-    for eventobj in eventobj_lists:
-        eventobj_list.remove(eventobj)
-    print(eventobj_list)
-    return render(request, "upcomingEvents.html", {"events": eventobj_list})
+        applied_events.append(eventobj)
+    for event in applied_events:
+        if event in all_events and event.end_date < timezone.now():
+            all_events.remove(event)
+    # print(all_events)
+    return render(request, "upcomingEvents.html", {"events": all_events})
 
 
 def pastEvents(request, user_pk):
@@ -51,7 +55,7 @@ def pastEvents(request, user_pk):
     eventobj_list = []
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
-        if eventobj.end_date > datetime.now():
+        if eventobj.end_date < timezone.now():
             eventobj_list.append(eventobj)
     return render(request, "pastEvents.html", {"events": eventobj_list})
 

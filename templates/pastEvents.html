@@ -1,1 +1,12 @@
-{{ events }}
+{% extends '_base.html' %}
+{% load static %} 
+
+{% block title %}Event List{% endblock title %}
+
+{% block content %}
+
+<h1>Past Events</h1>
+
+{% include '_event_list.html' %}
+
+{% endblock content %}

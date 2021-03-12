@@ -1,7 +1,3 @@
-{% extends '_base.html' %} {% load static %} {% block title %}Home{% endblock title %} {% block head %} {% comment %}
-<link rel="stylesheet" href="css/home.css"> {% endcomment %} {% endblock head %} {% block content %}
-<h1>Upcomming Events</h1>
-
 <!-- Background image -->
 {% for event in events %}
 <div class="card text-center justify-content-center text-md-center" style="max-width: 50%; margin: auto; margin-bottom:20px;">
@@ -11,15 +7,10 @@
     <div class="card-body">
         <h5 class="card-title">Department here</h5>
         <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Atque, laudantium! Iure maiores, nobis dignissimos laboriosam molestiae eaque ducimus, ipsa delectus itaque neque voluptates consequuntur natus quasi ea dolorum ratione ipsum.</p>
-        <a href="{% url 'lecture_app:event' user.id event.id %}" class="btn btn-primary">link to the event page</a>
+        <a href="#" class="btn btn-primary">link to the event page</a>
     </div>
     <div class="card-footer text-muted">
         Ending on {{ event.end_date }}
     </div>
 </div>
 {% endfor %}
-<!-- Background image -->
-
-
-
-{% endblock content %}
