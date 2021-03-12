@@ -90,6 +90,9 @@ class Event(models.Model):
     start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
     max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True)
+
+    description = models.CharField(_("Descrtiption"), max_length=100, default="No description")
+    summary = models.TextField(_("Summary"), null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
     status = models.CharField(_("Status"), choices=EventStatus.choices, default=EventStatus.ON_SCHEDULE, max_length=20)
     type = models.CharField(_("Type"), choices=EventType.choices, default=EventType.CIR, max_length=20)
