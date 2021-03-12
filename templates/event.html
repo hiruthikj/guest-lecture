@@ -18,15 +18,16 @@ user {{ user.user_type }} {{ user.pk }}
 <br>{{ event.status }}
 <br>{{ event.type }}
 
-<form action="{% url 'lecture_app:event_registration' user_pk=user.pk pk=event.pk %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Register</button>
-</form>
+
 
 {% if already_applied %}
 Registered!!
 {% else %}
-Not registered
+{% comment %} Not registered {% endcomment %}
+<form action="{% url 'lecture_app:event_registration' user_pk=user.pk pk=event.pk %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Register</button>
+</form>
 {% endif %}
 
 
