@@ -5,7 +5,7 @@ from .models import Department, Event, Student, Faculty, CIRFaculty, ExternalUse
 
 admin.site.site_header = "Event Administration"
 admin.site.index_title = "CRUD Operations"
-admin.site.site_title = "Guest Lecture Site"
+admin.site.site_title = "Lecture Site"
 
 import csv
 from django.http import HttpResponse
