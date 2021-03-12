@@ -10,7 +10,9 @@
         <a href="{% url 'lecture_app:event' user.id event.id %}" class="btn btn-primary">link to the event page</a>
     </div>
     <div class="card-footer text-muted">
-        Ending on {{ event.end_date }}
+        <p>Starts on {{ event.start_date }}</p>
+        <p>Ending on {{ event.end_date }}</p>
+        
     </div>
 </div>
 {% endfor %}
