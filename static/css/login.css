@@ -149,3 +149,10 @@ body, html {
 /* #invalidPwd{
   display: none;
 } */
+
+
+/* my css */
+
+.margin-0-auto{
+    margin: 0 auto;
+}
