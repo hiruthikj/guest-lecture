@@ -33,16 +33,20 @@ class ExportCsvMixin:
 class EventAdmin(admin.ModelAdmin, ExportCsvMixin):
     fieldsets = [
         ('Event Info',         {'fields': ['event_name','start_date','end_date','max_seats']}),
-        ('Other Info',       {'fields': ['description','summary','place','status','type',]}),
+        ('Other Info',       {'fields': ['description','summary','place','status','type', 'created_by',]}),
     ]
     # inlines = [ChoiceInline]
     list_display = ['event_name','start_date','end_date','type','status', ]  
     list_filter = ['status','type','start_date','end_date', ]
     
     search_fields = ['event_name', ]
-    # readonly_fields = ('pub_date',)
+    readonly_fields = ('created_by',)
 
     actions = ["export_as_csv",]
+
+    def save_model(self, request, obj, form, change):
+        obj.created_by = request.user
+        super(EventAdmin, self).save_model(request, obj, form, change)
 
 # class CustomUserAdmin(UserAdmin):
 #     fieldsets = [

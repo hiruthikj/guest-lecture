@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.shortcuts import redirect
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 # STATUSES = [
 #     (1, 'On-Schedule'),
@@ -89,13 +90,14 @@ class Event(models.Model):
     event_name = models.CharField(_("Event Name"), max_length=200)
     start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
-    max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True)
+    max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
 
     description = models.CharField(_("Descrtiption"), max_length=100, default="No description")
     summary = models.TextField(_("Summary"), null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
     status = models.CharField(_("Status"), choices=EventStatus.choices, default=EventStatus.ON_SCHEDULE, max_length=20)
     type = models.CharField(_("Type"), choices=EventType.choices, default=EventType.CIR, max_length=20)
+    created_by = models.ForeignKey('accounts.CustomUser', verbose_name=_("Created by"), on_delete=models.CASCADE, null=True, blank=True,)
 
     def __str__(self):
         return f"{self.event_name}"
