@@ -28,6 +28,22 @@ class ExportCsvMixin:
 
     export_as_csv.short_description = "Export as CSV"
 
+
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin, ExportCsvMixin):
+    fieldsets = [
+        ('Event Info',         {'fields': ['event_name','start_date','end_date','max_seats']}),
+        ('Other Info',       {'fields': ['description','summary','place','status','type',]}),
+    ]
+    # inlines = [ChoiceInline]
+    list_display = ['event_name','start_date','end_date','type','status', ]  
+    list_filter = ['status','type','start_date','end_date', ]
+    
+    search_fields = ['event_name', ]
+    # readonly_fields = ('pub_date',)
+
+    actions = ["export_as_csv",]
+
 # class CustomUserAdmin(UserAdmin):
 #     fieldsets = [
 #         (
@@ -79,4 +95,4 @@ admin.site.register(Faculty)
 admin.site.register(CIRFaculty)
 admin.site.register(ExternalUser)
 admin.site.register(applications)
-admin.site.register(Event)
+# admin.site.register(Event, EventAdmin)
