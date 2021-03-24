@@ -1,0 +1,9 @@
+
+.my-bg-img{
+	background-image: url("/static/img/virtual-events.cb61ab02113d.jpg");
+    background-repeat: no-repeat;
+    background-position: center center;              /* optional, center the image */
+	height: 630px;
+}
+
+ 

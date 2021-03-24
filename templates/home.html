@@ -1,12 +1,17 @@
-{% extends '_base.html' %} {% load static %} {% block title %}Home{% endblock title %} {% block head %} {% comment %}
-<link rel="stylesheet" href="css/home.css"> {% endcomment %} {% endblock head %} {% block content %}
+{% extends '_base.html' %}
+{% load static %} 
+
+{% block title %}Home{% endblock title %} 
+
+{% block head %} 
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+{% endblock head %} 
+
+{% block content %}
 
 
 <!-- Background image -->
-<div class="p-5 text-center bg-image" style="
-    background-image: url({% static 'img/virtual-events.jpg' %});
-    height=800px;
-    ">
+<div class="p-5 text-center bg-image my-bg-img" >
     <div class="mask" style="background-color: rgba(0, 0, 0, 0.6)">
         <div class="justify-content-center align-items-center h-100">
             <div class="text-white">
