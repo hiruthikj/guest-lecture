@@ -1,2 +1,2 @@
-# Lecture Management
+# Guest Lecture
 
