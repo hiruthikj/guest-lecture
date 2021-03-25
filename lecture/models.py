@@ -92,7 +92,8 @@ class Event(models.Model):
     start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
     max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
-
+    # guest_fk = models.ForeignKey("Guest", verbose_name=_("Guest"), on_delete=models.CASCADE)
+    
     description = models.CharField(_("Descrtiption"), max_length=100, default="No description")
     summary = models.TextField(_("Summary"), null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
@@ -135,4 +136,9 @@ class applications(models.Model):
     def __str__(self):
         return f"{self.event} - {self.student}"
 
-    
+
+# class Guest(models.Model):
+#     account = models.OneToOneField(User, verbose_name=_("Account"), on_delete=models.CASCADE)
+    # details = models.CharField(_("Details"), max_length=100, null=True, blank=True)
+#     # year_of_study = models.PositiveIntegerField(_("Year of Study"), null=True, blank=True, choices=YearOfStudyChoices.choices) 
+#     dept_fk = models.ForeignKey('Department', verbose_name=_("Department"), on_delete=models.PROTECT, null=True, blank=True)
