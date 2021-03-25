@@ -24,17 +24,17 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return context
 
 
-def appliedEvents(request, user_pk):
+def applied_events(request, user_pk):
     apps = applications.objects.filter(student=user_pk)
     eventobj_list = []
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
         if eventobj.end_date > timezone.now():
             eventobj_list.append(eventobj)
-    return render(request, "appliedEvents.html", {"events": eventobj_list})
+    return render(request, "applied_events.html", {"events": eventobj_list})
 
 
-def upcomingEvents(request, user_pk):
+def upcoming_events(request, user_pk):
     all_events = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
     all_events = list(all_events)
     apps = applications.objects.filter(student=user_pk)
@@ -47,17 +47,17 @@ def upcomingEvents(request, user_pk):
         if event in all_events and event.end_date < timezone.now():
             all_events.remove(event)
     # print(all_events)
-    return render(request, "upcomingEvents.html", {"events": all_events})
+    return render(request, "upcoming_events.html", {"events": all_events})
 
 
-def pastEvents(request, user_pk):
+def past_events(request, user_pk):
     apps = applications.objects.filter(student=user_pk)
     eventobj_list = []
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
         if eventobj.end_date < timezone.now():
             eventobj_list.append(eventobj)
-    return render(request, "pastEvents.html", {"events": eventobj_list})
+    return render(request, "past_events.html", {"events": eventobj_list})
 
 
 class EventView(DetailView):
@@ -73,7 +73,7 @@ class EventView(DetailView):
 
 
 
-def eventRegistrationView(request, user_pk, pk):
+def event_registration_view(request, user_pk, pk):
     event = Event.objects.get(pk=pk)
     event.register_to_event(user=request.user)
     return redirect(reverse('lecture_app:event', kwargs=dict(user_pk=user_pk,pk=pk)))

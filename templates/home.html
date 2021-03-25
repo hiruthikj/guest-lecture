@@ -25,19 +25,19 @@
                             <li class="list-group-item bg-success ">
                                 <p class="">
                                     Applied Events
-                                    <a href="{% url 'lecture_app:appliedEvents' user.id %}" class="stretched-link float-right"><i class="fas fa-angle-double-right"></i></a>
+                                    <a href="{% url 'lecture_app:applied_events' user.id %}" class="stretched-link float-right"><i class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
                             <li class="list-group-item bg-info ">
                                 <p class="">
                                     Upcoming Events
-                                    <a href="{% url 'lecture_app:upcomingEvents' user.id %}" class="stretched-link float-right"><i class="fas fa-angle-double-right"></i></a>
+                                    <a href="{% url 'lecture_app:upcoming_events' user.id %}" class="stretched-link float-right"><i class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
                             <li class="list-group-item bg-warning ">
                                 <p class="">
                                     Past Events
-                                    <a href="{% url 'lecture_app:pastEvents' user.id %}" class="stretched-link float-right"><i
+                                    <a href="{% url 'lecture_app:past_events' user.id %}" class="stretched-link float-right"><i
                                             class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
@@ -52,7 +52,7 @@
                                 <p class="">
 
                                     Create an Event
-                                    <a href="/appliedEvents/{{ user.id }}" class="stretched-link float-right"><i
+                                    <a href="/applied_events/{{ user.id }}" class="stretched-link float-right"><i
                                             class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
@@ -60,7 +60,7 @@
                                 <p class="">
 
                                     Created Events
-                                    <a href="/upcomingEvents/{{ user.id }}" class="stretched-link float-right"><i
+                                    <a href="/upcoming_events/{{ user.id }}" class="stretched-link float-right"><i
                                             class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
@@ -68,7 +68,7 @@
                                 <p class="">
 
                                     Past Events
-                                    <a href="{% url 'lecture_app:pastEvents' user.id %}" class="stretched-link float-right"><i
+                                    <a href="{% url 'lecture_app:past_events' user.id %}" class="stretched-link float-right"><i
                                             class="fas fa-angle-double-right"></i></a>
                                 </p>
                             </li>
