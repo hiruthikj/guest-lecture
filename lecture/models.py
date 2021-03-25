@@ -4,6 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
 from django.shortcuts import redirect
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 # STATUSES = [
 #     (1, 'On-Schedule'),
@@ -122,11 +123,12 @@ class applications(models.Model):
     event = models.ForeignKey('Event',verbose_name='Event',on_delete=models.CASCADE)
     time_registered = models.DateTimeField(_("Time Registered"), auto_now_add=True, null=True, blank=True)
 
-    def has_applied(self, user_pk, event_pk):
+    @staticmethod
+    def has_applied(user_pk, event_pk):
         try:
             applications.objects.get(student=user_pk, event=event_pk)
             return True
-        except:
+        except ObjectDoesNotExist:
             return False
 
     
