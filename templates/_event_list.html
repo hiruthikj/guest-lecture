@@ -2,10 +2,10 @@
 {% for event in events %}
 <div class="card text-center justify-content-center text-md-center" style="max-width: 50%; margin: auto; margin-bottom:20px;">
     <div class="card-header">
-        {{ event.event_name }}
+        {{ event.type }}
     </div>
     <div class="card-body">
-        <h5 class="card-title">{{ event.type }}</h5>
+        <h5 class="card-title">{{ event.event_name }}</h5>
         <p class="card-text">{{ event.description }}</p>
         <a href="{% url 'lecture_app:event' user.id event.id %}" class="btn btn-primary">link to the event page</a>
     </div>
