@@ -3,15 +3,17 @@ from django.shortcuts import reverse, render, redirect
 
 # from django.contrib.auth import authenticate, login
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils.translation import activate
 from django.views.generic.base import TemplateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
+from django.core.exceptions import ObjectDoesNotExist
 
 from datetime import datetime, time
 from django.utils import timezone
 # now = timezone.now()
-from .models import Event, applications
+from .models import Event, Faculty, Student, applications
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -22,6 +24,27 @@ class HomeView(LoginRequiredMixin, TemplateView):
 
         # context['book_list'] = Book.objects.all()
         return context
+
+def get_valid_events(user_pk):
+    cir_events = Event.objects.filter(type=Event.EventType.CIR, status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
+    
+    user = Student.objects.get(account=user_pk)
+    user_dept = user.dept_fk
+    
+    all_dept_events = Event.objects.filter(type=Event.EventType.DEPT, status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
+    dept_events = []
+
+    for dept_event in all_dept_events:
+        try:
+            faculty_created = Faculty.objects.get(account=dept_event.created_by)
+            if faculty_created.dept_fk == user_dept:
+                dept_events.append(dept_event)
+        except ObjectDoesNotExist:
+            continue
+        
+
+    return dept_events + list(cir_events)
+
 
 
 def applied_events(request, user_pk):
@@ -35,8 +58,10 @@ def applied_events(request, user_pk):
 
 
 def upcoming_events(request, user_pk):
-    all_events = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
-    all_events = list(all_events)
+    # all_events = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
+    # all_events = list(all_events)
+
+    all_events = get_valid_events(user_pk)
     apps = applications.objects.filter(student=user_pk)
     applied_events = []
     # print(all_events)

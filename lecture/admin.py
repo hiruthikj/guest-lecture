@@ -48,6 +48,22 @@ class EventAdmin(admin.ModelAdmin, ExportCsvMixin):
         obj.created_by = request.user
         super(EventAdmin, self).save_model(request, obj, form, change)
 
+
+@admin.register(Faculty)
+class FacultyAdmin(admin.ModelAdmin, ExportCsvMixin):
+
+    list_display = ['account','dept_fk',]  
+    list_filter = ['dept_fk', ]
+    
+    search_fields = ['account__first_name', ]
+    # readonly_fields = ('created_by',)
+
+    actions = ["export_as_csv",]
+
+    def save_model(self, request, obj, form, change):
+        obj.created_by = request.user
+        super(EventAdmin, self).save_model(request, obj, form, change)
+
 # class CustomUserAdmin(UserAdmin):
 #     fieldsets = [
 #         (
@@ -95,7 +111,7 @@ class EventAdmin(admin.ModelAdmin, ExportCsvMixin):
 # admin.site.register(CustomUser)
 admin.site.register(Student)
 admin.site.register(Department)
-admin.site.register(Faculty)
+# admin.site.register(Faculty)
 admin.site.register(CIRFaculty)
 admin.site.register(ExternalUser)
 admin.site.register(applications)
