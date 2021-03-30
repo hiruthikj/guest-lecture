@@ -92,7 +92,7 @@ class Event(models.Model):
     start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
     max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
-    # guest_fk = models.ForeignKey("Guest", verbose_name=_("Guest"), on_delete=models.CASCADE)
+    guest_fk = models.ForeignKey("Guest", verbose_name=_("Guest"), on_delete=models.CASCADE, null=True, blank=True)
     
     description = models.CharField(_("Descrtiption"), max_length=100, default="No description")
     summary = models.TextField(_("Summary"), null=True, blank=True)
