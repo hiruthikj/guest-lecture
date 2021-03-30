@@ -139,6 +139,6 @@ class applications(models.Model):
 
 # class Guest(models.Model):
 #     account = models.OneToOneField(User, verbose_name=_("Account"), on_delete=models.CASCADE)
-    # details = models.CharField(_("Details"), max_length=100, null=True, blank=True)
+#     details = models.CharField(_("Details"), max_length=100, null=True, blank=True)
 #     # year_of_study = models.PositiveIntegerField(_("Year of Study"), null=True, blank=True, choices=YearOfStudyChoices.choices) 
 #     dept_fk = models.ForeignKey('Department', verbose_name=_("Department"), on_delete=models.PROTECT, null=True, blank=True)
