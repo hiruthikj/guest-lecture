@@ -15,6 +15,9 @@ user {{ user.user_type }} {{ user.pk }}
 <br>{{ event.event_name }}
 <br>{{ event.start_date }}
 <br>{{ event.end_date }}
+<br>{{ event.guest_fk.get_name }}
+<br>{{ event.guest_fk.details }}
+
 <br>{{ event.max_seats }}
 <br>{{ event.status }}
 <br>{{ event.type }}
