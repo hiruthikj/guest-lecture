@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import Group
 
-from .models import Department, Event, Student, Faculty, CIRFaculty, ExternalUser, applications
+from .models import Department, Event, Student, Faculty, CIRFaculty, ExternalUser, applications, Guest
 
 User = get_user_model()
 
@@ -110,14 +110,18 @@ class ApplicationAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     actions = ["export_as_csv",]
 
+@admin.register(Guest)
+class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+    list_display = ['account', ]  
+    # list_filter = ['event', 'student', ]
+    
+    search_fields = ['account' ]
+    # readonly_fields = ('event', 'student', )
 
+    actions = ["export_as_csv",]
 
 # admin.site.register(CustomUser, CustomUserAdmin)
-# admin.site.register(CustomUser)
+
 admin.site.register(Student)
 admin.site.register(Department)
-# admin.site.register(Faculty)
-# admin.site.register(CIRFaculty)
 admin.site.register(ExternalUser)
-# admin.site.register(applications)
-# admin.site.register(Event, EventAdmin)
