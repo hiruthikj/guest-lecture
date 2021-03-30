@@ -56,6 +56,53 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ["username", ]
     list_filter = ["user_type", "is_staff", ]
 
+
+
+
+# class CustomUserAdmin(UserAdmin):
+#     fieldsets = [
+#         (
+#             "Login Info",
+#             {
+#                 "fields": [
+#                     "username",
+#                     "password",
+#                 ]
+#             }
+#         ),
+#         (
+#             "User Info",
+#             {
+#                 "fields": [
+#                     "first_name",
+#                     "last_name",
+#                     "year_of_study",
+#                     "email",
+#                     "phone_no",
+#                 ]
+#             },
+#         ),
+#         (
+#             "Other Info",
+#             {
+#                 "fields": [
+#                     "is_staff",
+#                     "is_active",
+#                     "is_superuser",
+#                     "groups",
+#                     "user_permissions",
+#                 ]
+#             },
+#         ),
+#     ]
+#     # inlines = [UserInline]
+#     list_display = ["username", "dept_fk", "year_of_study"]
+#     list_filter = ["dept_fk__dept_code"]
+
+#     search_fields = ["username"]
+
+
+
 admin.site.register(CustomUser, CustomUserAdmin)
 
     

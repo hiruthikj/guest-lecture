@@ -100,47 +100,16 @@ class CIRFacultyAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 
-# class CustomUserAdmin(UserAdmin):
-#     fieldsets = [
-#         (
-#             "Login Info",
-#             {
-#                 "fields": [
-#                     "username",
-#                     "password",
-#                 ]
-#             }
-#         ),
-#         (
-#             "User Info",
-#             {
-#                 "fields": [
-#                     "first_name",
-#                     "last_name",
-#                     "year_of_study",
-#                     "email",
-#                     "phone_no",
-#                 ]
-#             },
-#         ),
-#         (
-#             "Other Info",
-#             {
-#                 "fields": [
-#                     "is_staff",
-#                     "is_active",
-#                     "is_superuser",
-#                     "groups",
-#                     "user_permissions",
-#                 ]
-#             },
-#         ),
-#     ]
-#     # inlines = [UserInline]
-#     list_display = ["username", "dept_fk", "year_of_study"]
-#     list_filter = ["dept_fk__dept_code"]
+@admin.register(applications)
+class ApplicationAdmin(admin.ModelAdmin, ExportCsvMixin):
+    list_display = ['event', 'student', ]  
+    list_filter = ['event', 'student', ]
+    
+    search_fields = ['event__event_name' ]
+    readonly_fields = ('event', 'student', )
 
-#     search_fields = ["username"]
+    actions = ["export_as_csv",]
+
 
 
 # admin.site.register(CustomUser, CustomUserAdmin)
@@ -150,5 +119,5 @@ admin.site.register(Department)
 # admin.site.register(Faculty)
 # admin.site.register(CIRFaculty)
 admin.site.register(ExternalUser)
-admin.site.register(applications)
+# admin.site.register(applications)
 # admin.site.register(Event, EventAdmin)
