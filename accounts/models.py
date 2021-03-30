@@ -9,6 +9,7 @@ class CustomUser(AbstractUser):
         STUDENT = 'STUD', _("Student")
         FACULTY = 'FCLT', _("Faculty")
         CIR_FACULTY = 'CIR', _("CIR Faculty")
+        GUEST = 'GUEST', _("Guest Lecturer")
         OTHERS = 'OTHER', _("External Students")
     
     user_type = models.CharField(_("User Type"), max_length=10, choices=UserTypes.choices)
