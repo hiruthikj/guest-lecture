@@ -1,11 +1,5 @@
-from django.db import models
 from django.shortcuts import reverse, render, redirect
-
-# from django.contrib.auth import authenticate, login
-from django.http import HttpResponse, HttpResponseRedirect
-from django.utils.translation import activate
 from django.views.generic.base import TemplateView
-from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import DetailView
 from django.core.exceptions import ObjectDoesNotExist
@@ -25,7 +19,7 @@ class HomeView(LoginRequiredMixin, TemplateView):
         # context['book_list'] = Book.objects.all()
         return context
 
-def get_valid_events(user_pk):
+def get_valid_events(user_pk, exclude_list=[]):
     cir_events = Event.objects.filter(type=Event.EventType.CIR, status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
     
     user = Student.objects.get(account=user_pk)
@@ -37,14 +31,12 @@ def get_valid_events(user_pk):
     for dept_event in all_dept_events:
         try:
             faculty_created = Faculty.objects.get(account=dept_event.created_by)
-            if faculty_created.dept_fk == user_dept:
+            if faculty_created.dept_fk == user_dept: # and not model_in_operator(dept_event, exclude_list):
                 dept_events.append(dept_event)
         except ObjectDoesNotExist:
             continue
         
-
     return dept_events + list(cir_events)
-
 
 
 def applied_events(request, user_pk):
@@ -56,22 +48,26 @@ def applied_events(request, user_pk):
             eventobj_list.append(eventobj)
     return render(request, "applied_events.html", {"events": eventobj_list})
 
+# def model_in_operator(model_obj, model_obj_list):
+#     for obj in model_obj_list:
+#         if model_obj == obj:
+#             return True
+#     return False
+
 
 def upcoming_events(request, user_pk):
-    # all_events = Event.objects.filter(status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
-    # all_events = list(all_events)
-
-    all_events = get_valid_events(user_pk)
     apps = applications.objects.filter(student=user_pk)
     applied_events = []
-    # print(all_events)
+    
     for app in apps:
         eventobj = Event.objects.get(event_name=app.event)
         applied_events.append(eventobj)
+
+    all_events = get_valid_events(user_pk, exclude_list=applied_events)
+
     for event in applied_events:
-        if event in all_events and event.end_date < timezone.now():
+        if event in all_events: # and event.end_date < timezone.now():
             all_events.remove(event)
-    # print(all_events)
     return render(request, "upcoming_events.html", {"events": all_events})
 
 
