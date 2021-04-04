@@ -99,8 +99,8 @@ class Event(models.Model):
     occupied_seats = models.PositiveIntegerField(_("Occupied Seats"), default=0, null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     guest_fk = models.ForeignKey("Guest", verbose_name=_("Guest"), on_delete=models.CASCADE, null=True, blank=True)
     
-    description = models.CharField(_("Descrtiption"), max_length=100, default="No description")
-    summary = models.TextField(_("Summary"), null=True, blank=True)
+    description = models.TextField(_("Descrtiption"), max_length=300, default="No description")
+    summary = models.TextField(_("Summary"),max_length=1000, null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
     status = models.CharField(_("Status"), choices=EventStatus.choices, default=EventStatus.ON_SCHEDULE, max_length=20)
     type = models.CharField(_("Type"), choices=EventType.choices, default=EventType.CIR, max_length=20)
