@@ -96,6 +96,7 @@ class Event(models.Model):
     start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
     max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
+    occupied_seats = models.PositiveIntegerField(_("Occupied Seats"), default=0, null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     guest_fk = models.ForeignKey("Guest", verbose_name=_("Guest"), on_delete=models.CASCADE, null=True, blank=True)
     
     description = models.CharField(_("Descrtiption"), max_length=100, default="No description")
@@ -125,6 +126,11 @@ class Event(models.Model):
     def is_past_event(self):
         return self.end_date < timezone.now()
       
+    def is_seats_full(self):
+        return self.occupied_seats >= self.max_seats 
+
+    def remaining_seats(self):
+        return self.max_seats - self.occupied_seats
     
 class applications(models.Model):
     student = models.ForeignKey('accounts.CustomUser',verbose_name='student',on_delete=models.CASCADE)

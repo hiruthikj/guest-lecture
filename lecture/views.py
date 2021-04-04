@@ -97,6 +97,8 @@ class EventView(DetailView):
 def event_registration_view(request, user_pk, pk):
     event = Event.objects.get(pk=pk)
     event.register_to_event(user=request.user)
+    event.occupied_seats += 1
+    event.save()
     return redirect(reverse('lecture_app:event', kwargs=dict(user_pk=user_pk,pk=pk)))
 
 

@@ -79,13 +79,15 @@
                 <td> <i class="far fa-calendar text-info"></i> {{ event.end_date }}</td>
               </tr>
               <tr>
-                <th scope="row" class="w-150 dark-grey-text h6">Locations</th>
+                <th scope="row" class="w-150 dark-grey-text h6">Location</th>
                 <td> <i class="fas fa-map-marker-alt text-danger"></i> {{ event.place }}</td>
               </tr>
+              {% if event.max_seats and event.occupied_seats and event.is_seats_full %}
               <tr>
                 <th scope="row" class="w-150 dark-grey-text h6">Remaining Seats</th>
-                <td><i class="fas fa-user-alt text-warning"> {{ event.remaining_seats }}</td>
+                <td><i class="fas fa-user-alt text-warning"> {{ event.remaining_seats }} / {{ event.max_seats }}</td>
               </tr>
+              {% endif %}
             </tbody>
           </table>
         </div>
@@ -162,8 +164,9 @@
       {% if already_applied %}
       <button type="submit" class="btn btn-outline-success disabled text-align" aria-disabled="true">Registered
         Sucessfully</button>
+      {% elif event.max_seats and event.occupied_seats and event.is_seats_full %}
+      <button type="submit" class="btn btn-outline-danger disabled text-align" aria-disabled="true">No seat available</button>
       {% else %}
-
       <form action="{% url 'lecture_app:event_registration' user_pk=user.pk pk=event.pk %}" method="post">
         {% csrf_token %}
         <button type="submit" class="btn btn-primary text-align">Register</button>
