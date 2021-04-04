@@ -2,6 +2,7 @@
 db.sqlite3
 
 dump.json
+accounts/test_logoutFormTest.py
 
 **/__pycache__/
 
