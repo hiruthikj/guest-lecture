@@ -13,6 +13,7 @@ whitenoise = "~=5.1.0"
 environs = {version = "==8.0.0", extras = ["django"]}
 
 [dev-packages]
+selenium = "*"
 
 [requires]
 python_version = "3.7"
