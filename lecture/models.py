@@ -1,3 +1,4 @@
+from datetime import time
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.translation import ugettext_lazy as _
@@ -5,6 +6,9 @@ from django.urls import reverse
 from django.shortcuts import redirect
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
+
+# from datetime import
+from django.utils import timezone
 
 # STATUSES = [
 #     (1, 'On-Schedule'),
@@ -117,6 +121,9 @@ class Event(models.Model):
     def remove_registration_from_event(self, user):
         existing_application = applications.objects.get(student=user, event=self)
         existing_application.delete()
+
+    def is_past_event(self):
+        return self.end_date < timezone.now()
       
     
 class applications(models.Model):
