@@ -10,35 +10,34 @@
 
 {% block content %}
 
-<br><br><br>
-user {{ user.user_type }} {{ user.pk }}
-<br>{{ event.event_name }}
-<br>{{ event.start_date }}
-<br>{{ event.end_date }}
-<br>{{ event.guest_fk.get_name }}
-<br>{{ event.guest_fk.details }}
-
-<br>{{ event.max_seats }}
-<br>{{ event.status }}
-<br>{{ event.type }}
+  {% comment %} 
 
 
 
-{% if already_applied %}
-Registered!!
-{% else %} Not registered
+  <br>{{ event.start_date }}
+  <br>{{ event.end_date }}
+  <br>{{ event.guest_fk.get_name }}
+  <br>{{ event.guest_fk.details }}
 
-<form action="{% url 'lecture_app:event_registration' user_pk=user.pk pk=event.pk %}" method="post">
-    {% csrf_token %}
-    <button type="submit">Register</button>
-</form>
-{% endif %} 
-
+  <br>{{ event.max_seats }}
+  <br>{{ event.status }}
+  <br>{{ event.type }}
 
 
-{% comment %} <div  class="container">
+
+
+
+  </div> {% endcomment %} 
+
+
+
+
+<div class="container">
+<div class="display-3 text-align">{{ event.event_name }}</div><br>
+
 
 <!-- Classic tabs -->
+<div class="background-white">
 <div class="classic-tabs border rounded px-4 pt-1">
 
   <ul class="nav tabs-primary nav-justified" id="advancedTab" role="tablist">
@@ -48,53 +47,50 @@ Registered!!
     <li class="nav-item">
       <a class="nav-link" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Information</a>
     </li>
-    <li class="nav-item">
+    {% if event.is_past_event %}
+          <li class="nav-item">
       <a class="nav-link" id="reviews-tab" data-toggle="tab" href="#reviews" role="tab" aria-controls="reviews" aria-selected="false">Reviews (1)</a>
     </li>
+    {% endif %}
+
   </ul>
   <div class="tab-content" id="advancedTabContent">
     <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-      <h5>Product Description</h5>
-      <p class="small text-muted text-uppercase mb-2">Shirts</p>
-      <ul class="rating">
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="fas fa-star fa-sm text-primary"></i>
-        </li>
-        <li>
-          <i class="far fa-star fa-sm text-primary"></i>
-        </li>
-      </ul>
-      <h6>12.99 $</h6>
-      <p class="pt-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam, sapiente illo. Sit
-        error voluptas repellat rerum quidem, soluta enim perferendis voluptates laboriosam. Distinctio,
-        officia quis dolore quos sapiente tempore alias.</p>
+      <h5>GUEST: {{ event.guest_fk.get_name }}</h5>
+      <p class="small text-muted text-uppercase mb-2">{{ event.guest_fk.details }}</p>
+      <h6>{{ event.type }}</h6>
+
+        {% if event.max_seats %}
+          <h6>{{ event.max_seats }}</h6> 
+        {% endif %}
+      <p class="pt-1"> {{ event.description }}  </p>
     </div>
     <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
       <h5>Additional Information</h5>
       <table class="table table-striped table-bordered mt-3">
         <thead>
           <tr>
-            <th scope="row" class="w-150 dark-grey-text h6">Weight</th>
-            <td><em>0.3 kg</em></td>
+            <th scope="row" class="w-150 dark-grey-text h6">Start</th>
+            <td><em>{{ event.start_date }}</em></td>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row" class="w-150 dark-grey-text h6">Dimensions</th>
-            <td><em>50 × 60 cm</em></td>
+            <th scope="row" class="w-150 dark-grey-text h6">End</th>
+            <td><em>{{ event.start_date }}</em></td>
+          </tr>
+          <tr>
+            <th scope="row" class="w-150 dark-grey-text h6">Locations</th>
+            <td><em>{{ event.place }}</em></td>
+          </tr>
+          <tr>
+            <th scope="row" class="w-150 dark-grey-text h6">Remaining Seats</th>
+            <td><em>{{ event.remaining_seats }}</em></td>
           </tr>
         </tbody>
       </table>
     </div>
+    {% if event.is_past_event %}
     <div class="tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
       <h5><span>1</span> review for <span>Fantasy T-shirt</span></h5>
       <div class="media mt-3 mb-4">
@@ -106,21 +102,11 @@ Registered!!
               <span>– </span><span>January 28, 2020</span>
             </p>
             <ul class="rating mb-sm-0">
-              <li>
                 <i class="fas fa-star fa-sm text-primary"></i>
-              </li>
-              <li>
                 <i class="fas fa-star fa-sm text-primary"></i>
-              </li>
-              <li>
                 <i class="fas fa-star fa-sm text-primary"></i>
-              </li>
-              <li>
                 <i class="fas fa-star fa-sm text-primary"></i>
-              </li>
-              <li>
                 <i class="far fa-star fa-sm text-primary"></i>
-              </li>
             </ul>
           </div>
           <p class="mb-0">Nice one, love it!</p>
@@ -131,39 +117,30 @@ Registered!!
       <p>Your email address will not be published.</p>
       <div class="my-3">
         <ul class="rating mb-0">
-          <li>
             <a href="#!">
               <i class="fas fa-star fa-sm text-primary"></i>
             </a>
-          </li>
-          <li>
             <a href="#!">
               <i class="fas fa-star fa-sm text-primary"></i>
             </a>
-          </li>
-          <li>
             <a href="#!">
               <i class="fas fa-star fa-sm text-primary"></i>
             </a>
-          </li>
-          <li>
             <a href="#!">
               <i class="fas fa-star fa-sm text-primary"></i>
             </a>
-          </li>
-          <li>
             <a href="#!">
               <i class="far fa-star fa-sm text-primary"></i>
             </a>
-          </li>
         </ul>
       </div>
       <div>
         <!-- Your review -->
         <div class="md-form md-outline">
-          <textarea id="form76" class="md-textarea form-control pr-6" rows="4"></textarea>
           <label for="form76">Your review</label>
+          <textarea id="form76" class="md-textarea form-control pr-6" rows="4"></textarea>
         </div>
+        {% comment %}
         <!-- Name -->
         <div class="md-form md-outline">
           <input type="text" id="form75" class="form-control pr-6">
@@ -172,20 +149,32 @@ Registered!!
         <!-- Email -->
         <div class="md-form md-outline">
           <input type="email" id="form77" class="form-control pr-6">
-          <label for="form77">Email</label>
+          <label for="form77">Email</label> 
         </div>
+        {% endcomment %}
         <div class="text-right pb-2">
-          <button type="button" class="btn btn-primary">Add a review</button>
+          <button type="button" class="btn btn-primary">Add </button>
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
 
 </div>
 <!-- Classic tabs -->
+</div>
 
+  {% if already_applied %}
+  <button type="submit" class="btn btn-outline-success disabled text-align" aria-disabled="true">Registered Sucessfully</button>
+  {% else %}
 
-</div> {% endcomment %}
+  <form action="{% url 'lecture_app:event_registration' user_pk=user.pk pk=event.pk %}" method="post">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-dark text-align">Register</button>
+  </form>
+  {% endif %}   
+
+</div> 
 
 
 
