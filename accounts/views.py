@@ -21,6 +21,8 @@ class SignUpView(CreateView):
     success_url = reverse_lazy(settings.LOGIN_URL)
 
 def login_view(request):
+    TEMPLATE_LOCATION = 'registration/login.html'
+
     if request.method == 'POST':
         try:
             username = request.POST['username']
@@ -32,7 +34,7 @@ def login_view(request):
                 'first_render' : False,
                 'wrong_password' : False,
             } 
-            return render(request, 'registration/login.html', context)
+            return render(request, TEMPLATE_LOCATION, context)
         else:
             if user.check_password(password):
                 # if student.user.is_authenticated:
@@ -55,14 +57,14 @@ def login_view(request):
                 'no_user' : False,
                 'first_render' : False,
                 } 
-                return render(request, 'registration/login.html', context)
+                return render(request, TEMPLATE_LOCATION, context)
     else:
         context = { 
                 'first_render' : True,
                 'wrong_password' : False,
                 'no_user' : False,
             } 
-        return render(request, 'registration/login.html', context)
+        return render(request, TEMPLATE_LOCATION, context)
 
 class CustomLogOutView(LogoutView):
     template_name = 'registration/logout.html'

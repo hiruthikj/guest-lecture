@@ -4,6 +4,10 @@ from django.shortcuts import reverse
 
 from .models import CustomUser, Department
 
+TEST_DEPT_CODE = 'test code'
+TEST_DEPT_NAME = 'test dept name'
+
+
 class LoginTest(TestCase):
 
     # def setUp(self) -> None:
@@ -16,19 +20,20 @@ class LoginTest(TestCase):
     #         email='test@email.com',
     #         password='secret'
     #     )
+    
 
     def test_create_dept(self):
         dept = Department.objects.create(
-            dept_code = 'test code',
-            dept_name = 'test dept name'
+            dept_code = TEST_DEPT_CODE,
+            dept_name = TEST_DEPT_NAME
         )
-        self.assertEqual(dept.dept_code, 'test code')
-        self.assertEqual(dept.dept_name, 'test dept name')
+        self.assertEqual(dept.dept_code, TEST_DEPT_CODE)
+        self.assertEqual(dept.dept_name, TEST_DEPT_NAME)
 
     def test_create_user(self):
-        dept = Department.objects.create(
-            dept_code = 'test code',
-            dept_name = 'test dept name'
+        Department.objects.create(
+            dept_code = TEST_DEPT_CODE,
+            dept_name = TEST_DEPT_NAME
         )
         User = get_user_model()
         user = User.objects.create_user(

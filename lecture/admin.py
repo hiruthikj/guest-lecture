@@ -26,7 +26,7 @@ class ExportCsvMixin:
 
         writer.writerow(field_names)
         for obj in queryset:
-            row = writer.writerow([getattr(obj, field) for field in field_names])
+            writer.writerow([getattr(obj, field) for field in field_names])
 
         return response
 
@@ -40,8 +40,9 @@ class EventAdmin(admin.ModelAdmin, ExportCsvMixin):
         ('Other Info',       {'fields': ['description','summary','place','status','type', 'created_by',]}),
     ]
     # inlines = [ChoiceInline]
-    list_display = ['event_name','start_date','end_date','type','status', ]  
+    list_display = ['event_name','start_date','end_date','type','occupied_seats','max_seats', 'status' ]  
     list_filter = ['status','type','start_date','end_date', 'guest_fk']
+    ordering = ['end_date', ]
     
     search_fields = ['event_name', ]
     readonly_fields = ('created_by','occupied_seats')

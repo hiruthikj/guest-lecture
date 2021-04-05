@@ -1,6 +1,8 @@
 .env
 db.sqlite3
 
+.scannerwork/
+
 dump.json
 accounts/test_logoutFormTest.py
 
