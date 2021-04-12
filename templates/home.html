@@ -52,7 +52,7 @@
                                 <p class="">
 
                                     Create an Event
-                                    <a href="/applied_events/{{ user.id }}" class="stretched-link float-right"><i
+                                    <a href="/applied_events/{{ user.id }}" class="stretched-link float-right"><span
                                             class="fas fa-angle-double-right"></span></a>
                                 </p>
                             </li>
@@ -60,7 +60,7 @@
                                 <p class="">
 
                                     Created Events
-                                    <a href="/upcoming_events/{{ user.id }}" class="stretched-link float-right"><i
+                                    <a href="/upcoming_events/{{ user.id }}" class="stretched-link float-right"><span
                                             class="fas fa-angle-double-right"></span></a>
                                 </p>
                             </li>
@@ -68,7 +68,7 @@
                                 <p class="">
 
                                     Past Events
-                                    <a href="{% url 'lecture_app:past_events' user.id %}" class="stretched-link float-right"><i
+                                    <a href="{% url 'lecture_app:past_events' user.id %}" class="stretched-link float-right"><span
                                             class="fas fa-angle-double-right"></span></a>
                                 </p>
                             </li>
