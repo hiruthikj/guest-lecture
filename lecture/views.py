@@ -43,7 +43,7 @@ def applied_events(request, user_pk):
     apps = applications.objects.filter(student=user_pk)
     eventobj_list = []
     for app in apps:
-        eventobj = Event.objects.get(event_name=app.event)
+        eventobj = Event.objects.get(id=app.event.id)
         if eventobj.end_date > timezone.now():
             eventobj_list.append(eventobj)
     return render(request, "applied_events.html", {"events": eventobj_list})
@@ -60,7 +60,7 @@ def upcoming_events(request, user_pk):
     applied_events = []
     
     for app in apps:
-        eventobj = Event.objects.get(event_name=app.event)
+        eventobj = Event.objects.get(id=app.event.id)
         applied_events.append(eventobj)
 
     all_events = get_valid_events(user_pk, exclude_list=applied_events)
@@ -75,7 +75,7 @@ def past_events(request, user_pk):
     apps = applications.objects.filter(student=user_pk)
     eventobj_list = []
     for app in apps:
-        eventobj = Event.objects.get(event_name=app.event)
+        eventobj = Event.objects.get(id=app.event.id)
         if eventobj.end_date < timezone.now():
             eventobj_list.append(eventobj)
     return render(request, "past_events.html", {"events": eventobj_list})
