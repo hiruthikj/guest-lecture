@@ -53,67 +53,39 @@
       <div class="tab-content" id="advancedTabContent">
         <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
           <h5>Lecturer</h5>
-<<<<<<< HEAD
           <p> <span class="fas fa-user-tie text-info"></span> {{ event.guest_fk.get_name }} </p>
-=======
-          <p> <i class="fas fa-user-tie text-info"></i> {{ event.guest_fk.get_name }} </p>
->>>>>>> refs/remotes/origin/master
           <p class="small text-muted text-uppercase mb-2">{{ event.guest_fk.details }}</p>
 
           <br>
           <h6><em>{{ event.type }}</em> event</h6>
 
           {% if event.max_seats %}
-<<<<<<< HEAD
           {% comment %} <h6>Maximum Seats <span class="fas fa-user-alt text-warning"></span> {{ event.max_seats }}</h6> {% endcomment %}
-=======
-          {% comment %} <h6>Maximum Seats <i class="fas fa-user-alt text-warning"></i> {{ event.max_seats }}</h6> {% endcomment %}
->>>>>>> refs/remotes/origin/master
           {% endif %}
           <p class="pt-1"> {{ event.description }} </p>
         </div>
         <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
           <h5>Additional Information</h5>
-<<<<<<< HEAD
           <table class="table table-striped table-bordered mt-3" aria-describedby="Additional Information">
             <thead>
               <tr>
                 <th scope="row" class="w-150 dark-grey-text h6">Start</th>
                 <td> <span class="fas fa-calendar text-info"></span> {{ event.start_date }}</td>
-=======
-          <table class="table table-striped table-bordered mt-3">
-            <thead>
-              <tr>
-                <th scope="row" class="w-150 dark-grey-text h6">Start</th>
-                <td> <i class="fas fa-calendar text-info"></i> {{ event.start_date }}</td>
->>>>>>> refs/remotes/origin/master
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row" class="w-150 dark-grey-text h6">End</th>
-<<<<<<< HEAD
                 <td> <span class="far fa-calendar text-info"></span> {{ event.end_date }}</td>
               </tr>
               <tr>
                 <th scope="row" class="w-150 dark-grey-text h6">Location</th>
                 <td> <span class="fas fa-map-marker-alt text-danger"></span> {{ event.place }}</td>
-=======
-                <td> <i class="far fa-calendar text-info"></i> {{ event.end_date }}</td>
-              </tr>
-              <tr>
-                <th scope="row" class="w-150 dark-grey-text h6">Location</th>
-                <td> <i class="fas fa-map-marker-alt text-danger"></i> {{ event.place }}</td>
->>>>>>> refs/remotes/origin/master
               </tr>
               {% if event.max_seats and event.occupied_seats and event.is_seats_full %}
               <tr>
                 <th scope="row" class="w-150 dark-grey-text h6">Remaining Seats</th>
-<<<<<<< HEAD
                 <td><span class="fas fa-user-alt text-warning"> {{ event.remaining_seats }} / {{ event.max_seats }}</td>
-=======
-                <td><i class="fas fa-user-alt text-warning"> {{ event.remaining_seats }} / {{ event.max_seats }}</td>
->>>>>>> refs/remotes/origin/master
               </tr>
               {% endif %}
             </tbody>
@@ -132,19 +104,11 @@
                   <span>– </span><span>January 28, 2020</span>
                 </p>
                 <ul class="rating mb-sm-0">
-<<<<<<< HEAD
                   <span class="fas fa-star fa-sm text-primary"></span>
                   <span class="fas fa-star fa-sm text-primary"></span>
                   <span class="fas fa-star fa-sm text-primary"></span>
                   <span class="fas fa-star fa-sm text-primary"></span>
                   <span class="far fa-star fa-sm text-primary"></span>
-=======
-                  <i class="fas fa-star fa-sm text-primary"></i>
-                  <i class="fas fa-star fa-sm text-primary"></i>
-                  <i class="fas fa-star fa-sm text-primary"></i>
-                  <i class="fas fa-star fa-sm text-primary"></i>
-                  <i class="far fa-star fa-sm text-primary"></i>
->>>>>>> refs/remotes/origin/master
                 </ul>
               </div>
               <p class="mb-0">Nice one, love it!</p>
@@ -156,7 +120,6 @@
           <div class="my-3">
             <ul class="rating mb-0">
               <a href="#!">
-<<<<<<< HEAD
                 <span class="fas fa-star fa-sm text-primary"></span>
               </a>
               <a href="#!">
@@ -170,21 +133,6 @@
               </a>
               <a href="#!">
                 <span class="far fa-star fa-sm text-primary"></span>
-=======
-                <i class="fas fa-star fa-sm text-primary"></i>
-              </a>
-              <a href="#!">
-                <i class="fas fa-star fa-sm text-primary"></i>
-              </a>
-              <a href="#!">
-                <i class="fas fa-star fa-sm text-primary"></i>
-              </a>
-              <a href="#!">
-                <i class="fas fa-star fa-sm text-primary"></i>
-              </a>
-              <a href="#!">
-                <i class="far fa-star fa-sm text-primary"></i>
->>>>>>> refs/remotes/origin/master
               </a>
             </ul>
           </div>
