@@ -17,8 +17,9 @@
             <div class="text-white">
                 <h1 class="mb-3">Welcome to the Event System, {{ user.username }}!</h1>
                 {% comment %}
-                <h4 class="mb-3">Subheading</h4> {% endcomment %} {% comment %} <a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a> {% endcomment %} 
-                {% if user.user_type == "STUD" %}
+                <h4 class="mb-3">Subheading</h4> {% endcomment %} {% comment %} <a class="btn btn-outline-light btn-lg" href="#!" role="button">Call to action</a> 
+                {% endcomment %} 
+                {% comment %} {% if user.user_type == "STUD" %} {% endcomment %}
                 <div class="container justify-content-center w-25">
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -44,7 +45,7 @@
                         </ul>
                     </div>
                 </div>
-                {% else %}
+                {% comment %} {% else %}
                 <div class="container justify-content-center w-25">
                     <div class="card">
                         <ul class="list-group list-group-flush">
@@ -76,7 +77,7 @@
                     </div>
                 </div>
 
-                {% endif %}
+                {% endif %} {% endcomment %}
 
             </div>
         </div>

@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.shortcuts import reverse, render, redirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -7,7 +8,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime, time
 from django.utils import timezone
 # now = timezone.now()
-from .models import Event, Faculty, Student, applications
+from .models import Event, ExternalUser, Faculty, Student, applications
+
+User = get_user_model()
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -20,8 +23,12 @@ class HomeView(LoginRequiredMixin, TemplateView):
         return context
 
 def get_valid_events(user_pk, exclude_list=[]):
+    if ExternalUser.objects.filter(account=user_pk).exists():
+        cir_events = Event.objects.filter(allow_ext=True, type=Event.EventType.CIR, status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
+        return list(cir_events)
+
     cir_events = Event.objects.filter(type=Event.EventType.CIR, status=Event.EventStatus.ON_SCHEDULE, end_date__gt=timezone.now())
-    
+
     user = Student.objects.get(account=user_pk)
     user_dept = user.dept_fk
     

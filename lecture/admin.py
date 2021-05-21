@@ -36,7 +36,7 @@ class ExportCsvMixin:
 @admin.register(Event)
 class EventAdmin(admin.ModelAdmin, ExportCsvMixin):
     fieldsets = [
-        ('Event Info',         {'fields': ['event_name','start_date','end_date','guest_fk', 'occupied_seats','max_seats']}),
+        ('Event Info',         {'fields': ['event_name','start_date','end_date','guest_fk', 'occupied_seats','max_seats', 'allow_ext']}),
         ('Other Info',       {'fields': ['description','summary','place','status','type', 'created_by',]}),
     ]
     # inlines = [ChoiceInline]

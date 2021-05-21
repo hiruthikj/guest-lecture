@@ -91,20 +91,22 @@ class Event(models.Model):
         CIR = 'CIR', _("CIR")
         DEPT = 'DEPT', _("Department")
         OTHER = 'OTHER', _("Other")
-    #e_id = models.AutoField(primary_key=True)
+
     event_name = models.CharField(_("Event Name"), max_length=200)
     start_date = models.DateTimeField(_("Start Date"), null=True, blank=True,auto_now=False, auto_now_add=False)
     end_date = models.DateTimeField(_("End Date"), null=True, blank=True, auto_now=False, auto_now_add=False)
     max_seats = models.PositiveIntegerField(_("Maximum Seats"), null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     occupied_seats = models.PositiveIntegerField(_("Occupied Seats"), default=0, null=True, blank=True, validators=[MinValueValidator(0), MaxValueValidator(100)])
     guest_fk = models.ForeignKey("Guest", verbose_name=_("Guest"), on_delete=models.CASCADE, null=True, blank=True)
+
+    allow_ext = models.BooleanField(_("Allow External Users"), default=False)
     
     description = models.TextField(_("Descrtiption"), max_length=300, default="No description")
     summary = models.TextField(_("Summary"),max_length=1000, null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
     status = models.CharField(_("Status"), choices=EventStatus.choices, default=EventStatus.ON_SCHEDULE, max_length=20)
     type = models.CharField(_("Type"), choices=EventType.choices, default=EventType.CIR, max_length=20)
-    created_by = models.ForeignKey('accounts.CustomUser', verbose_name=_("Created by"), on_delete=models.CASCADE, null=True, blank=True,)
+    created_by = models.ForeignKey('accounts.CustomUser', verbose_name=_("Created by"), on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return f"{self.event_name}"
