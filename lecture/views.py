@@ -1,16 +1,21 @@
-from django.contrib.auth import get_user_model
-from django.shortcuts import reverse, render, redirect
-from django.views.generic.base import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
-from django.core.exceptions import ObjectDoesNotExist
-
 from datetime import datetime, time
+
+from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import ObjectDoesNotExist
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.shortcuts import redirect, render, reverse
+from django.template.loader import render_to_string
 from django.utils import timezone
-# now = timezone.now()
+from django.utils.html import strip_tags
+from django.views.generic import DetailView
+from django.views.generic.base import TemplateView
+
 from .models import Event, ExternalUser, Faculty, Student, applications
 
 User = get_user_model()
+# now = timezone.now()
 
 
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -100,13 +105,38 @@ class EventView(DetailView):
         return context
 
 
-
 def event_registration_view(request, user_pk, pk):
     event = Event.objects.get(pk=pk)
     event.register_to_event(user=request.user)
     event.occupied_seats += 1
     event.save()
+
+    user = User.objects.get(pk=user_pk)
+    send_confirmation_mail(user, event)
+
     return redirect(reverse('lecture_app:event', kwargs=dict(user_pk=user_pk,pk=pk)))
+
+
+def send_confirmation_mail(user, event):
+    context = {
+        "user": user,
+        "event": event
+    }
+
+    subject = f"Applied to {event}"
+    html_message = render_to_string('mail_template.html', context=context)
+    plain_message = strip_tags(html_message)
+    
+    email = EmailMultiAlternatives(
+        subject=subject,
+        body=plain_message,
+        from_email=settings.EMAIL_HOST_USER,
+        to=[user.email],
+    )
+    
+    # email.content_subtype = "html"
+    email.attach_alternative(html_message, "text/html")
+    email.send(fail_silently=False)
 
 
 # @login_required()

@@ -159,4 +159,10 @@ LOGIN_REDIRECT_URL = 'lecture_app:home'
 # SESSION_COOKIE_AGE = 60 * 60 * 24 * 30 # One month
 
 
-
+# MAIL 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD')
