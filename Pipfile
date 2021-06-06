@@ -11,6 +11,7 @@ django-heroku = "*"
 django-crispy-forms = "~=1.9.2"
 whitenoise = "~=5.1.0"
 environs = {version = "==8.0.0", extras = ["django"]}
+selenium = "*"
 
 [dev-packages]
 selenium = "*"
