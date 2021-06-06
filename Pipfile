@@ -14,7 +14,10 @@ environs = {version = "==8.0.0", extras = ["django"]}
 selenium = "*"
 
 [dev-packages]
-selenium = "*"
+black = "*"
 
 [requires]
 python_version = "3.7"
+
+[pipenv]
+allow_prereleases = true
