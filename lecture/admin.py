@@ -123,6 +123,35 @@ class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 # admin.site.register(CustomUser, CustomUserAdmin)
 
-admin.site.register(Student)
-admin.site.register(Department)
-admin.site.register(ExternalUser)
+@admin.register(Department)
+class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+    list_display = ['dept_code', 'dept_name']  
+    # list_filter = ['event', 'student', ]
+    
+    search_fields = ['dept_name' ]
+    # readonly_fields = ('event', 'student', )
+
+    actions = ["export_as_csv",]
+
+
+@admin.register(Student)
+class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+    list_display = ['account', 'reg_no']  
+    # list_filter = ['event', 'student', ]
+    
+    search_fields = ['account__username', ]
+    # readonly_fields = ('event', 'student', )
+
+    actions = ["export_as_csv",]
+
+
+
+@admin.register(ExternalUser)
+class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+    list_display = ['account',]  
+    # list_filter = ['event', 'student', ]
+    
+    search_fields = ['account__username', ]
+    # readonly_fields = ('event', 'student', )
+
+    actions = ["export_as_csv",]
