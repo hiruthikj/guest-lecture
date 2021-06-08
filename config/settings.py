@@ -166,3 +166,6 @@ EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_HOST_USER = env.str('EMAIL_HOST_USER', default="nomail")
 EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default="nopassword")
+
+# update for django 3.2
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
