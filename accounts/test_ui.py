@@ -56,7 +56,7 @@ class LoginFormTest(LiveServerTestCase):
         self.driver.implicitly_wait(15)
 
         self.driver.find_element_by_link_text('admin').click()
-        sleep(1)
+        # sleep(1)
 
         username = self.driver.find_element_by_name('username')
         password = self.driver.find_element_by_name('password')
@@ -67,7 +67,7 @@ class LoginFormTest(LiveServerTestCase):
         password.send_keys('test_admin_password')
         submit.send_keys(Keys.RETURN)
 
-        sleep(1)
+        # sleep(1)
         # ele = WebDriverWait(driver, 10).until(
         #     EC.presence_of_element_located((By.link_text, "Courses"))
         # )
@@ -84,11 +84,23 @@ class AdminSiteTest(LiveServerTestCase):
         self.driver = webdriver.Chrome(options=options)
         self.driver.maximize_window()
 
+        User = get_user_model()
+        User.objects.create_user(
+            username="test_username",
+            password="test_password",
+            user_type=User.UserTypes.STUDENT,
+        )
+        User.objects.create_superuser(
+            username="test_admin",
+            password="test_admin_password",
+            user_type=User.UserTypes.STUDENT,
+        )
+
     def tearDown(self) -> None:
         self.driver.close()
 
     def test_adminfirstpage(self):
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
 
         username = self.driver.find_element_by_name("username")
         password = self.driver.find_element_by_name("password")
@@ -96,8 +108,8 @@ class AdminSiteTest(LiveServerTestCase):
             "/html/body/div/div[2]/div/div[1]/div/form/div[3]/input"
         )
 
-        username.send_keys("admin")
-        password.send_keys("student/.,")
+        username.send_keys("test_admin")
+        password.send_keys("test_admin_password")
         submit.send_keys(Keys.RETURN)
         # ---------------------------------------------USER------------------------------------------------------
         sleep(3)
@@ -107,7 +119,7 @@ class AdminSiteTest(LiveServerTestCase):
         users.send_keys(Keys.RETURN)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
         sleep(3)
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # --------------------------------------------USER_ADD----------------------------------------------------
         sleep(2)
         user_add = self.driver.find_element_by_xpath(
@@ -147,7 +159,7 @@ class AdminSiteTest(LiveServerTestCase):
         save.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------USER_CHANGE---------------------------------------------------------------
         user_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[1]/table/tbody/tr/td[2]/a"
@@ -189,7 +201,7 @@ class AdminSiteTest(LiveServerTestCase):
         yes.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ---------------------------------------------GROUPS------------------------------------------------------------------
         groups = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[2]/table/tbody/tr/th/a"
@@ -197,7 +209,7 @@ class AdminSiteTest(LiveServerTestCase):
         groups.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # --------------------------------------------GROUP_ADD------------------------------------------------------
         group_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[2]/table/tbody/tr/td[1]/a"
@@ -218,7 +230,7 @@ class AdminSiteTest(LiveServerTestCase):
         chooseall.click()
         grp_save.send_keys(Keys.RETURN)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------GROUP_CHANGE------------------------------------------------------------
         group_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[2]/table/tbody/tr/td[2]/a"
@@ -261,7 +273,7 @@ class AdminSiteTest(LiveServerTestCase):
         sleep(3)
 
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------APPLICATIONS------------------------------------------------------------
         applications = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[1]/th/a"
@@ -270,7 +282,7 @@ class AdminSiteTest(LiveServerTestCase):
         sleep(3)
         # self.driver.get('http://localhost:8000/admin/')
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # --------------------------------------------APPLICATION_ADD--------------------------------------------------------
         application_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[1]/td[1]/a"
@@ -278,7 +290,7 @@ class AdminSiteTest(LiveServerTestCase):
         application_add.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ---------------------------------------------APPLICATION_CHANGE--------------------------------------------------
         application_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[1]/td[2]/a"
@@ -286,7 +298,7 @@ class AdminSiteTest(LiveServerTestCase):
         application_change.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------CIR FACULTY------------------------------------------------------------
         cirfaculty = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[2]/th/a"
@@ -294,7 +306,7 @@ class AdminSiteTest(LiveServerTestCase):
         cirfaculty.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # --------------------------------------------CIR FACULTY_ADD---------------------------------------------------------
         cirfaculty_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[2]/td[1]/a"
@@ -331,7 +343,6 @@ class AdminSiteTest(LiveServerTestCase):
             "/html/body/div/div[3]/div/div[1]/div/form/div/fieldset/div/div/div/a[1]/img"
         )
         cirfaculty_c.click()
-
         sleep(3)
         cirfaculty_first_name = self.driver.find_element_by_name("first_name")
         cirfaculty_last_name = self.driver.find_element_by_name("last_name")
@@ -358,7 +369,7 @@ class AdminSiteTest(LiveServerTestCase):
         sleep(3)
 
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------CIR FACULTY_CHANGE---------------------------------------------------------
         cirfaculty_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[2]/td[2]/a"
@@ -366,7 +377,7 @@ class AdminSiteTest(LiveServerTestCase):
         cirfaculty_change.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------DEPARTMENTS------------------------------------------------------------
         departments = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[3]/th/a"
@@ -374,7 +385,7 @@ class AdminSiteTest(LiveServerTestCase):
         departments.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------DEPARTMENTS_ADD---------------------------------------------------------
         departments_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[3]/td[1]/a"
@@ -393,7 +404,7 @@ class AdminSiteTest(LiveServerTestCase):
         dept_name.send_keys("Civil Engineering")
         dept_save.send_keys(Keys.RETURN)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------DEPARTMENT_CHANGE-----------------------------------------------
         department_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[3]/td[2]/a"
@@ -431,7 +442,7 @@ class AdminSiteTest(LiveServerTestCase):
         dept_yes.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------EVENTS-----------------------------------------------------------------
         events = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[4]/th/a"
@@ -439,7 +450,7 @@ class AdminSiteTest(LiveServerTestCase):
         events.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------EVENTS_ADD-------------------------------------------------------------
         events_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[4]/td[1]/a"
@@ -447,7 +458,7 @@ class AdminSiteTest(LiveServerTestCase):
         events_add.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------EVENTS_CHANGE---------------------------------------------------------
         event_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[4]/td[2]/a"
@@ -455,7 +466,7 @@ class AdminSiteTest(LiveServerTestCase):
         event_change.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------EXTERNALUSERS----------------------------------------------------------
         externalusers = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[5]/th/a"
@@ -463,7 +474,7 @@ class AdminSiteTest(LiveServerTestCase):
         externalusers.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -----------------------------------------EXTERNALUSERS_ADD-----------------------------------------------------
         externalusers_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[5]/td[1]/a"
@@ -471,7 +482,7 @@ class AdminSiteTest(LiveServerTestCase):
         externalusers_add.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------EXTERNALUSER_CHANGE-----------------------------------------------------
         externaluser_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[5]/td[2]/a"
@@ -479,7 +490,7 @@ class AdminSiteTest(LiveServerTestCase):
         externaluser_change.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------FACULTY-------------------------------------------------------------
         faculty = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[6]/th/a"
@@ -487,7 +498,7 @@ class AdminSiteTest(LiveServerTestCase):
         faculty.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # --------------------------------------------FACULTY_ADD-----------------------------------------------------
         faculty_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[6]/td[1]/a"
@@ -495,7 +506,7 @@ class AdminSiteTest(LiveServerTestCase):
         faculty_add.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------FACULTY_CHANGE----------------------------------------------------
         faculty_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[6]/td[2]/a"
@@ -503,7 +514,7 @@ class AdminSiteTest(LiveServerTestCase):
         faculty_change.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------GUESTS-----------------------------------------------------------------
         guests = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[7]/th/a"
@@ -511,7 +522,7 @@ class AdminSiteTest(LiveServerTestCase):
         guests.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------GUESTS_ADD--------------------------------------------------------------
         guests_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[7]/td[1]/a"
@@ -529,7 +540,7 @@ class AdminSiteTest(LiveServerTestCase):
         guest_save.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------GUESTS_CHANGE-----------------------------------------------------------
         guests_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[7]/td[2]/a"
@@ -537,7 +548,7 @@ class AdminSiteTest(LiveServerTestCase):
         guests_change.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ------------------------------------------STUDENTS---------------------------------------------------------------
         students = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[8]/th/a"
@@ -545,7 +556,7 @@ class AdminSiteTest(LiveServerTestCase):
         students.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # ---------------------------------------------STUDENTS_ADD-------------------------------------------------------
         students_add = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[8]/td[1]/a"
@@ -565,7 +576,7 @@ class AdminSiteTest(LiveServerTestCase):
         stu_save.send_keys(Keys.RETURN)
         sleep(3)
         # -----------------------------------------RETURN TO HOME PAGE-----------------------------------------------
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
         # -------------------------------------------STUDENTS_CHANGE----------------------------------------------------
         student_change = self.driver.find_element_by_xpath(
             "/html/body/div/div[2]/div/div[1]/div[1]/div[3]/table/tbody/tr[8]/td[2]/a"
@@ -575,7 +586,7 @@ class AdminSiteTest(LiveServerTestCase):
         assert "admin" in self.driver.page_source
 
     def test_change_password(self):
-        self.driver.get("http://localhost:8000/admin/")
+        self.driver.get(self.live_server_url + "/admin/")
 
         username = self.driver.find_element_by_name("username")
         password = self.driver.find_element_by_name("password")
