@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env.str('SECRET_KEY')
+SECRET_KEY = env.str('SECRET_KEY', default = "*50ztf(+5x4s9)x$o@w4i6(t*7*s!h^&^m=&roz$=&4(y6s2+v")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # dev
     # 'django_extensions',
+    'django_jenkins',
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 DATABASES = {
-    'default': env.dj_db_url("DATABASE_URL")
+    'default': env.dj_db_url("DATABASE_URL", default="sqlite:///db.sqlite3")
     # 'default': {
     #     'ENGINE': 'django.db.backends.sqlite3',
     #     'NAME': BASE_DIR / 'db.sqlite3',
@@ -169,3 +170,12 @@ EMAIL_HOST_PASSWORD = env.str('EMAIL_HOST_PASSWORD', default="nopassword")
 
 # update for django 3.2
 DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+
+# django-jenkins
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pep8',
+    'django_jenkins.tasks.run_pyflakes',
+    'django_jenkins.tasks.run_jslint',
+    'django_jenkins.tasks.run_csslint',
+    'django_jenkins.tasks.run_sloccount'
+)
