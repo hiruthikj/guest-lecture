@@ -12,4 +12,6 @@ runtime.txt
 
 # other files
 /dump.json
-/accounts/test_logoutFormTest.py
+Dockerfile
+docker-compose.yml
+heroku.yml

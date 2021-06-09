@@ -4,13 +4,14 @@ services:
   web:
     build: .
     command: gunicorn config.wsgi -b 0.0.0.0:8000
+    # command: python /code/manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
     ports:
       - 8000:8000
     environment:
       - "DEBUG=True"
-      - "SECRET_KEY=*50ztf(+5x4s9)x$o@w4i6(t*7*s!h^&^m=&roz$=&4(y6s2+v"
+      - "SECRET_KEY=*50ztf(+5x4s9)x$$o@w4i6(t*7*s!h^&^m=&roz$$=&4(y6s2+v"
       - "DATABASE_URL=sqlite:///db.sqlite3"
       - "EMAIL_HOST_USER=h007.coder@gmail.com"
       - "EMAIL_HOST_PASSWORD=%%justanotherpassword007%%"
