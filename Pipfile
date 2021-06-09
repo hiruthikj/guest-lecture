@@ -15,6 +15,7 @@ selenium = "*"
 django-jenkins = "*"
 coverage = "*"
 pep8 = "*"
+pyflakes = "*"
 
 [dev-packages]
 black = "*"
