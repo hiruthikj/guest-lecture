@@ -12,7 +12,7 @@ class CustomUser(AbstractUser):
         GUEST = 'GUEST', _("Guest Lecturer")
         OTHERS = 'OTHER', _("External Students")
     
-    user_type = models.CharField(_("User Type"), max_length=10, choices=UserTypes.choices)
+    user_type = models.CharField(_("User Type"), max_length=10, choices=UserTypes.choices, default=UserTypes.OTHERS)
     phone_no = models.CharField(_("Phone Number"), max_length=10, unique=True, help_text='10-digit phone number',null=True, blank=True)
 
     def __str__(self):

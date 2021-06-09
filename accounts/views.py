@@ -5,20 +5,35 @@ from django.conf import settings
 from django.views.generic import CreateView
 from django.contrib.auth.views import LogoutView
 from django.contrib.auth import authenticate, get_user_model, login
-from django.shortcuts import reverse, render
+from django.shortcuts import reverse, render, redirect
 
 # from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import CustomUserCreationForm
-
+from .forms import CustomUserCreationForm, SignUpForm
+from lecture.models import ExternalUser
 
 CustomUser = get_user_model()
 
 
-class SignUpView(CreateView):
-    form_class = CustomUserCreationForm
-    template_name = 'registration/signup.html'
-    success_url = reverse_lazy(settings.LOGIN_URL)
+# class SignUpView(CreateView):
+#     form_class = CustomUserCreationForm
+#     template_name = 'registration/signup.html'
+#     success_url = reverse_lazy(settings.LOGIN_URL)
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request, user)
+            ExternalUser.objects.create(account=user)
+            return redirect('signup_success')
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
 
 def login_view(request):
     TEMPLATE_LOCATION = 'registration/login.html'

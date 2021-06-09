@@ -1,0 +1,51 @@
+{% extends '_base.html' %} 
+{% load static %} 
+
+{% block title %}Sign Up{% endblock%} 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/signup.css' %}" />
+{% endblock %} 
+{% block nav %} {% endblock %} 
+
+{% block content %}
+<div class="container">
+  <div class="card card-container form-group">
+    <p id="profile-name" class="profile-name-card">
+      <img src="{% static 'img/university.svg' %}" alt="university logo" />
+    </p>
+    <h1 id="pageTitle">LECTURE SYSTEM</h1>
+
+    <form action="{% url 'signup' %}" method="post" class="form-signin">
+      {% csrf_token %} 
+      {% for field in form %}
+      <p>
+        {{ field.label_tag }}<br />
+        {{ field }} 
+        
+          {% if field.help_text %}
+            <small style="color: grey">{{ field.help_text }}</small>
+          {% endif %} 
+
+        {% for error in field.errors %}
+        <button type="button" class="btn btn-danger" disabled id="invalidPwd">
+          {{ error }}
+        </button>
+        {% endfor %}
+      </p>
+      {% endfor %}
+
+      <!--<label><input name="remember_me" type="checkbox">Keep me logged in</label> -->
+      <button
+        type="submit"
+        name="submit"
+        class="btn btn-lg btn-primary btn-block btn-signin"
+      >
+        Sign up
+      </button>
+    </form>
+
+    <span class="margin-0-auto">Have account? <a href="{% url 'login' %}">Login</a></span>
+  </div>
+</div>
+
+{% endblock %}
