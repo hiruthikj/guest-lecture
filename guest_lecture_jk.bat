@@ -10,6 +10,5 @@ pipenv run python manage.py jenkins
 @REM heroku run python manage.py migrate
 
 
-@REM pipenv install -r requirements.txt --skip-lock
 @REM pipenv shell
 @REM pipenv run python manage.py jenkins --enable-coverage
