@@ -204,3 +204,9 @@ class AddFormTest(LiveServerTestCase):
     #      submit.send_keys(Keys.RETURN)
 
     #      assert 'logout' in self.driver.page_source
+
+
+
+# from django.contrib.auth.models import Group, Permission
+# cir_faculty_group, created = Group.objects.create(name='CIRFacultyGroup')
+# faculty_group, created = Group.objects.create(name='FacultyGroup')
