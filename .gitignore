@@ -15,3 +15,5 @@ runtime.txt
 Dockerfile
 docker-compose.yml
 heroku.yml
+
+/reports/ 
