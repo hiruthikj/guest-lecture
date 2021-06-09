@@ -16,7 +16,7 @@ class LoginTest(TestCase):
             dept_name = 'test dept name'
         )
         User = get_user_model()
-        user = User.objects.create_user(
+        self.user = User.objects.create_user(
             username='user',
             email='user@email.com',
             password='testpassword',
@@ -34,9 +34,6 @@ class LoginTest(TestCase):
         self.assertEqual(self.dept.dept_name, TEST_DEPT_NAME)
 
     def test_create_user(self):
-
-
-
         self.assertEqual(self.user.username, 'user')
         self.assertEqual(self.user.email, 'user@email.com')
         # self.assertEqual(user.year_of_study, 3)
