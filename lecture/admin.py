@@ -60,7 +60,7 @@ class FacultyAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ['account','dept_fk',]  
     list_filter = ['dept_fk', ]
     
-    search_fields = ['account__first_name', ]
+    search_fields = ['account__username', ]
     # readonly_fields = ('created_by',)
 
     actions = ["export_as_csv",]
@@ -83,7 +83,7 @@ class CIRFacultyAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ['account']  
     # list_filter = ['dept_fk', ]
     
-    search_fields = ['account__first_name', ]
+    search_fields = ['account__username', ]
     # readonly_fields = ('created_by',)
 
     actions = ["export_as_csv",]
@@ -116,7 +116,7 @@ class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ['account', ]  
     # list_filter = ['event', 'student', ]
     
-    search_fields = ['account' ]
+    search_fields = ['account__username' ]
     # readonly_fields = ('event', 'student', )
 
     actions = ["export_as_csv",]
@@ -124,7 +124,7 @@ class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
 # admin.site.register(CustomUser, CustomUserAdmin)
 
 @admin.register(Department)
-class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+class DepartmentAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ['dept_code', 'dept_name']  
     # list_filter = ['event', 'student', ]
     
@@ -135,7 +135,7 @@ class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 @admin.register(Student)
-class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+class StudentAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ['account', 'reg_no']  
     # list_filter = ['event', 'student', ]
     
@@ -147,7 +147,7 @@ class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
 
 
 @admin.register(ExternalUser)
-class GuestAdmin(admin.ModelAdmin, ExportCsvMixin):
+class ExternalUserAdmin(admin.ModelAdmin, ExportCsvMixin):
     list_display = ['account',]  
     # list_filter = ['event', 'student', ]
     
