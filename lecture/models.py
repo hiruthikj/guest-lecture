@@ -101,7 +101,7 @@ class Event(models.Model):
 
     allow_ext = models.BooleanField(_("Allow External Users"), default=False)
     
-    description = models.TextField(_("Descrtiption"), max_length=300, default="No description")
+    description = models.TextField(_("Description"), max_length=300, default="No description")
     summary = models.TextField(_("Summary"),max_length=1000, null=True, blank=True)
     place = models.CharField(_("Location"), max_length=200)
     status = models.CharField(_("Status"), choices=EventStatus.choices, default=EventStatus.ON_SCHEDULE, max_length=20)
