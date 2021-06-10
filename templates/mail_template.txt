@@ -1,0 +1,8 @@
+Hello {{user}}!
+
+You have applied to {{event}} successfuly!
+
+Event Information:
+Start: {{event.start_date}}
+End: {{event.end_date}}
+Location: {{event.place}}

@@ -1,5 +1,3 @@
-from datetime import datetime, time
-
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -125,7 +123,8 @@ def send_confirmation_mail(user, event):
 
     subject = f"Applied to {event}"
     html_message = render_to_string('mail_template.html', context=context)
-    plain_message = strip_tags(html_message)
+    plain_message = render_to_string('mail_template.txt', context=context)
+    # plain_message = strip_tags(html_message)
     
     email = EmailMultiAlternatives(
         subject=subject,
@@ -134,7 +133,6 @@ def send_confirmation_mail(user, event):
         to=[user.email],
     )
     
-    # email.content_subtype = "html"
     email.attach_alternative(html_message, "text/html")
     email.send(fail_silently=False)
 
