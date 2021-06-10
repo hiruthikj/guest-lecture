@@ -46,8 +46,8 @@
                     <a class="nav-item nav-link {% if request.path == 'courses' %}active{% endif %}"
                         href="{% url 'lecture_app:home'   %}"><span class="fas fa-book-open"></span>
                         Events</a>
-                    <a class="nav-item nav-link {% if request.path == 'exams' %}active{% endif %}"
-                        href="{% url 'lecture_app:home'   %}"><span class="fas fa-edit"></span> Settings</a>
+                    {% comment %} <a class="nav-item nav-link {% if request.path == 'exams' %}active{% endif %}"
+                        href="{% url 'lecture_app:home'   %}"><span class="fas fa-edit"></span> Settings</a> {% endcomment %}
                     <a class="nav-item nav-link {% if request.path == 'scores' %}active{% endif %}"
                         href="{% url 'lecture_app:home'%}"><span class="fas fa-clock"></span> 
                         <span id='current_time'>{% now "jS F Y H:i" %}</span>
