@@ -37,16 +37,19 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',                                # whitenoise
     'django.contrib.staticfiles',
 
-    # local apps
-    'lecture.apps.LectureConfig',
-    'accounts',
-    
     # 3rd party
 
     # dev
     # 'django_extensions',
     'django_jenkins',
 ]
+
+PROJECT_APPS = [
+    'lecture.apps.LectureConfig',
+    'accounts',
+]
+
+INSTALLED_APPS += PROJECT_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
