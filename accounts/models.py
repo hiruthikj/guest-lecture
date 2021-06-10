@@ -19,7 +19,10 @@ class CustomUser(AbstractUser):
         return f"{self.username}"
 
     def get_name(self):
-        return f"{self.first_name} {self.last_name}"
+        if self.first_name or self.last_name:
+            return f"{self.first_name} {self.last_name}"
+        else:
+            return self.get_username()
 
     def get_username(self):   
         return self.username
