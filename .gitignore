@@ -17,3 +17,5 @@ docker-compose.yml
 heroku.yml
 
 /reports/ 
+
+ngrok.exe
