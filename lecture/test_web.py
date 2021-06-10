@@ -9,7 +9,7 @@ TEST_DEPT_NAME = 'test dept name'
 
 
 class LoginTest(TestCase):
-
+  
     def setUp(self) -> None:
         self.dept = Department.objects.create(
             dept_code = 'test code',
