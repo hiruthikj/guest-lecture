@@ -1,2 +1,2 @@
 # Guest Lecture
-Hello there!
+Hello 
