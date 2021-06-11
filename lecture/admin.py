@@ -81,10 +81,8 @@ class FacultyAdmin(admin.ModelAdmin, ExportCsvMixin):
 class CIRFacultyAdmin(admin.ModelAdmin, ExportCsvMixin):
 
     list_display = ['account']  
-    # list_filter = ['dept_fk', ]
     
     search_fields = ['account__username', ]
-    # readonly_fields = ('created_by',)
 
     actions = ["export_as_csv",]
 
