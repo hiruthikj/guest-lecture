@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.utils.translation import ugettext_lazy as _
 
-# YEAR_OF_STUDY_CHOICES = [ (i,i) for i in range(1,5) ]
-
 class CustomUser(AbstractUser):
     class UserTypes(models.TextChoices):
         STUDENT = 'STUD', _("Student")
@@ -29,6 +27,3 @@ class CustomUser(AbstractUser):
 
     # def get_absolute_url(self):
     #     return reverse('lecture_app:home', kwargs={'username': self.get_username()})
-
-    # class Meta:
-    #     ordering = ['dept_fk__dept_name']
