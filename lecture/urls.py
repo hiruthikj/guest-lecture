@@ -6,8 +6,6 @@ from .views import HomeView, EventView, applied_events, past_events, upcoming_ev
 app_name = "lecture_app"
 
 urlpatterns = [
-    # path('login/', login_view, name="login"),
-    # path('logout/', LogoutView.as_view(template_name='logout.html'), name="logout"),
     path("", HomeView.as_view(), name="home"),
     path("applied_events/<int:user_pk>/", applied_events, name="applied_events"),
     path("upcoming_events/<int:user_pk>/", upcoming_events, name="upcoming_events"),

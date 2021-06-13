@@ -7,15 +7,7 @@ from django.shortcuts import redirect
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
-# from datetime import
 from django.utils import timezone
-
-# STATUSES = [
-#     (1, 'On-Schedule'),
-#     (2, 'Completed'),
-#     (3, 'Cancelled'),
-#     (4, 'Tentatitve'),
-# ]
 
 User = get_user_model()
 
@@ -29,15 +21,8 @@ class Department(models.Model):
 
 
 class Student(models.Model):
-    # class YearOfStudyChoices(models.IntegerChoices):
-    #     YEAR1 = 1,1
-    #     YEAR2 = 2,2
-    #     YEAR3 = 3,3
-    #     YEAR4 = 4,4
-
     account = models.OneToOneField(User, verbose_name=_("Account"), on_delete=models.CASCADE)
     reg_no = models.CharField(_("Registration Number"), max_length=50, null=True, blank=True, unique=True)
-    # year_of_study = models.PositiveIntegerField(_("Year of Study"), null=True, blank=True, choices=YearOfStudyChoices.choices) 
     dept_fk = models.ForeignKey('Department', verbose_name=_("Department"), on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
@@ -49,7 +34,6 @@ class Student(models.Model):
 
 class Faculty(models.Model):
     account = models.OneToOneField(User, verbose_name=_("Account"), on_delete=models.CASCADE)
-    # emp_no = models.CharField(_("Employee Number"), max_length=50, null=True, blank=True, unique=True)
     dept_fk = models.ForeignKey('Department', verbose_name=_("Department"), on_delete=models.PROTECT, null=True, blank=True)
 
     def __str__(self):
@@ -61,7 +45,6 @@ class Faculty(models.Model):
 
 class CIRFaculty(models.Model):
     account = models.OneToOneField(User, verbose_name=_("Account"), on_delete=models.CASCADE)
-    # emp_no = models.CharField(_("Employee Number"), max_length=50, null=True, blank=True, unique=True)
 
     def __str__(self):
         return f"{self.account.get_username()}"
@@ -118,7 +101,6 @@ class Event(models.Model):
         applications.objects.create(
             student = user,
             event = self,
-            # time_registered = timezone.now()
         )
 
     def remove_registration_from_event(self, user):
