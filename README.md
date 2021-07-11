@@ -1,3 +1,2 @@
 # Guest Lecture
-Hello There!
-This will give you all the info you need towards the project
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
