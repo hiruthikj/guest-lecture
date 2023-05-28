@@ -1,2 +1,2 @@
 # Guest Lecture
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/organization/repository)
+A Web Application to manage college technical events
